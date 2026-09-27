@@ -100,15 +100,15 @@ Szymon confirmed MIT for the entire project, including new application code.
 | Architecture shape | decided | Single Rails web app, server-rendered HTML; see architecture direction | `.ai/docs/architecture-direction.md` |
 | Boundaries | decided | App independent of the private engineering workflow | README setup and workflow sections |
 | Storage and data ownership | decided | Local SQLite file with synthetic feedback only | Architecture direction |
-| Retention and migrations | deferred | Define migration and sample reset commands when storage exists | Implementing agent, before readiness |
+| Retention and migrations | partial | `bin/rails db:prepare` / `db:reset` documented; sample data in a later goal | README |
 | Integrations and failure handling | decided | No app integrations; workflow setup fails closed if unavailable | Scope and inherited adapter |
 | Authentication and authorization | decided | Local-only unauthenticated demo; no public hosting authorized | Scope and architecture direction |
 | Secrets, privacy, and sensitive data | decided | Synthetic data only; preserve private workflow separation | Quality and boundaries |
 | Language, framework, and dependencies | decided | Ruby on Rails with SQLite; versions and gems at scaffold goal | Stack profile ruby-rails |
 | Environments and deployment | decided | Local developer machine only; production hosting out of scope | Scope |
-| Configuration | deferred | Establish app config when stack is selected | Implementing agent, before readiness |
-| Logging, monitoring, and errors | deferred | Readable errors required; logging depends on chosen stack | Implementing agent, before readiness |
-| Tests, lint, typecheck, performance | deferred | Adapter checks exist; application validation commands pending | Implementing agent, runtime bootstrap |
+| Configuration | decided | Standard Rails 8 config; local SQLite; no secrets required for v1 | `config/database.yml`, README |
+| Logging, monitoring, and errors | decided | Rails defaults; readable errors required for product flows in later goals | Scaffold goal #8 |
+| Tests, lint, typecheck, performance | partial | `bin/rails test` for smoke tests; RuboCop available via `bin/rubocop`; no separate lint CI job yet | README and CI `app-test` job |
 | Scale, reliability, and cost | decided | Small synthetic demo; no availability SLA or paid app services | Scope |
 | Supported platforms and compatibility | decided | Linux adapter CI; demo on Linux with a current evergreen browser; verify at scaffold | Goal acceptance for scaffold |
 | Accessibility and localization | decided | English interface; labelled keyboard-accessible controls | Quality and boundaries |
@@ -125,7 +125,7 @@ Szymon confirmed MIT for the entire project, including new application code.
 | All `deferred` items have reason and return trigger | Yes | Implementation and target configuration do not exist yet; triggers above |
 | Template customization complete | Yes | Product-facing docs and overlay in place |
 | Stack profile selected or marked N/A | Yes | `ruby-rails` profile active |
-| Real project commands recorded | Partial | Adapter and workflow commands verified; Rails commands deferred to scaffold goal |
+| Real project commands recorded | Yes | Rails setup, database, server, and test commands in README (goal #8) |
 | Root README describes the product | Yes | Includes honest current state |
 | `AGENTS.md` describes repository role | Yes | Thin entrypoint retained |
 | Bootstrap markers removed | Yes | Supplied project placeholders replaced |
