@@ -1,1 +1,1 @@
-{"generation": 1, "operation": null, "owner": null, "processed": 0, "recovered_run": "https://cursor.com/agents/project-executor-pr15", "requested": 2, "version": 1}
+{"generation": 2, "operation": null, "owner": {"run": "https://cursor.com/agents/bc-0934b2c9-b7b1-4716-b5bb-93369a58d845", "token": "0deeeb17e5054742ad5579c96b050597"}, "processed": 0, "recovered_run": "https://cursor.com/agents/project-executor-pr15", "requested": 3, "version": 1}
