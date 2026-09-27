@@ -1,9 +1,27 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# Synthetic demo feedback covering each allowed category (FR-008).
+# Idempotent: safe to run multiple times in development.
+
+samples = [
+  {
+    title: "Submit button misaligned on mobile",
+    description: "On a narrow viewport the primary submit control sits outside the form card.",
+    category: "bug"
+  },
+  {
+    title: "Export inbox to CSV",
+    description: "Would help share filtered feedback with stakeholders during reviews.",
+    category: "feature request"
+  },
+  {
+    title: "Clarify default category on new feedback",
+    description: "A short hint that uncategorized items appear as Other would reduce confusion.",
+    category: "other"
+  }
+]
+
+samples.each do |attrs|
+  feedback = Feedback.find_or_initialize_by(title: attrs[:title])
+  feedback.description = attrs[:description]
+  feedback.category = attrs[:category]
+  feedback.save!
+end
