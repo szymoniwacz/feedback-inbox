@@ -1,5 +1,7 @@
 class Feedback < ApplicationRecord
   CATEGORIES = %w[bug feature\ request other].freeze
+  FILTER_ALL = "all"
+  FILTERS = ([FILTER_ALL] + CATEGORIES).freeze
 
   before_validation :assign_default_category
 
@@ -8,6 +10,7 @@ class Feedback < ApplicationRecord
   validates :category, inclusion: { in: CATEGORIES }
 
   scope :inbox_order, -> { order(created_at: :desc, id: :desc) }
+  scope :in_category, ->(category) { where(category: category) }
 
   private
 
