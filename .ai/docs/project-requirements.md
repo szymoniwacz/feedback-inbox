@@ -2,7 +2,7 @@
 
 ## Purpose and current stage
 
-Build a small feedback inbox to demonstrate AI assisted software delivery from a short project goal. This document is the source of truth for acceptance criteria. The current stage is repository and documentation preparation; application implementation has not started.
+Build a small feedback inbox to demonstrate AI assisted software delivery from a short project goal. This document is the source of truth for acceptance criteria. On `main`, the Feedback Inbox application implements FR-001–FR-008; project #2 tracks the remaining documentation consistency and formal project close.
 
 The user wants the agent to choose the implementation task breakdown. Do not preassign child tasks or manufacture execution evidence.
 
