@@ -2,7 +2,7 @@
 
 A small product feedback app used to demonstrate how I work with AI coding agents: define the product, provide durable context, let an agent break a goal into tasks, and inspect the resulting code, tests and review evidence.
 
-**Status:** project definition prepared. The application and recorded demonstration have not been implemented yet.
+**Status:** Rails application scaffold is in place (Ruby 3.2.3, Rails 8.1.4, SQLite). Inbox product behaviour (FR-001–FR-008) is not implemented yet.
 
 ## What the app will do
 
@@ -30,6 +30,32 @@ I used AI assistance to prepare this documentation from my project brief. I own 
 | Reused my workflow through the template adapter | [Workflow setup](docs/setup.md) |
 
 Product task decomposition is intentionally left to Project Executor.
+
+## Application setup
+
+Requires Ruby **3.2.3** (see `.ruby-version`) and Bundler.
+
+```bash
+bundle install
+bin/rails db:prepare
+bin/rails server
+```
+
+Open `http://localhost:3000` for the placeholder home page.
+
+**Tests**
+
+```bash
+bin/rails db:test:prepare test
+```
+
+**Database reset** (local development)
+
+```bash
+bin/rails db:reset
+```
+
+Optional style check: `bin/rubocop` (not required in CI for the scaffold goal).
 
 ## Planned demonstration
 
@@ -71,8 +97,6 @@ This updates the private workflow. Changes to public adapter scripts must be rev
 
 ## Setup and validation
 
-Application setup and run commands will be added when the application exists. Ruby on Rails with SQLite and server-rendered HTML is the proposed stack, pending confirmation.
-
 Workflow setup requires read access to the private template:
 
 ```bash
@@ -87,11 +111,13 @@ bash tests/test-adapter.sh
 ./scripts/check-workflow-leak.sh
 ```
 
-These validate the adapter, not application behaviour. Public readers can inspect project documentation and eventual implementation evidence without private workflow access. Running the application must not require that access.
+CI on pull requests runs the adapter contract job and `bin/rails test` when the application is present.
+
+Public readers can inspect project documentation and implementation evidence without private workflow access. Running the application must not require that access.
 
 ## Current limits
 
-Application implementation, runtime versions, application commands and the recorded demo remain to be completed. Cloud automation access and triggers need verification for this repository. Documentation preparation does not establish application or automation readiness.
+Product behaviour, sample data, and the recorded demo walkthrough remain to be completed. Cloud automation access and triggers need verification for this repository.
 
 ## License
 

@@ -15,9 +15,9 @@
 
 | Decision | Rationale | Status |
 |---|---|---|
-| Ruby on Rails, SQLite, server-rendered HTML | Familiar stack with few moving parts for a local demo | Confirmed for implementation; exact versions chosen in scaffold goal |
+| Ruby on Rails, SQLite, server-rendered HTML | Familiar stack with few moving parts for a local demo | Ruby 3.2.3, Rails 8.1.4, SQLite (scaffold goal #8) |
 | Active stack profile | `.ai/stack-profiles/ruby-rails.md` | Recorded in project requirements |
 | Local-only execution, synthetic data, no authentication | Bounded demo; production hosting out of scope | Confirmed |
 
-Application commands and gem versions remain to be recorded when the Rails
-scaffold lands in the next product goal.
+Application commands are recorded in the root `README.md` (scaffold goal #8).
+Product behaviour (FR-001–FR-008) remains for follow-on goals.
