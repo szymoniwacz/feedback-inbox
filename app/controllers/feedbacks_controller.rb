@@ -21,9 +21,23 @@ class FeedbacksController < ApplicationController
     @feedback = Feedback.find(params[:id])
   end
 
+  def update
+    @feedback = Feedback.find(params[:id])
+
+    if @feedback.update(category_params)
+      redirect_to feedbacks_path, notice: "Category updated."
+    else
+      redirect_to feedbacks_path, alert: @feedback.errors.full_messages.to_sentence
+    end
+  end
+
   private
 
   def feedback_params
     params.expect(feedback: [:title, :description])
+  end
+
+  def category_params
+    params.expect(feedback: [:category])
   end
 end

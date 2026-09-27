@@ -76,4 +76,47 @@ class FeedbacksTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "a[href=?]", feedbacks_path, text: "Browse inbox"
   end
+
+  test "valid category change persists after reload" do
+    feedback = Feedback.create!(title: "Recategorize me", description: "Needs triage.", category: "other")
+
+    patch feedback_path(feedback), params: { feedback: { category: "bug" } }
+    assert_redirected_to feedbacks_path
+
+    feedback.reload
+    assert_equal "bug", feedback.category
+
+    get feedbacks_path
+    assert_response :success
+    assert_select "select#feedback_#{feedback.id}_category option[selected][value=?]", "bug"
+  end
+
+  test "invalid category is rejected and stored data is unchanged" do
+    feedback = Feedback.create!(title: "Stable item", description: "Should not change.", category: "other")
+
+    patch feedback_path(feedback), params: { feedback: { category: "invalid" } }
+    assert_redirected_to feedbacks_path
+    follow_redirect!
+
+    assert_response :success
+    assert_match "Category is not included in the list", response.body
+    assert_equal "other", feedback.reload.category
+
+    get new_feedback_path
+    assert_response :success
+    assert_select "form[action=?]", feedbacks_path
+  end
+
+  test "inbox category controls have unique ids and labels per item" do
+    first = Feedback.create!(title: "First", description: "One.", category: "other")
+    second = Feedback.create!(title: "Second", description: "Two.", category: "bug")
+
+    get feedbacks_path
+
+    assert_response :success
+    assert_select "label[for=?]", "feedback_#{first.id}_category"
+    assert_select "label[for=?]", "feedback_#{second.id}_category"
+    assert_select "select#feedback_#{first.id}_category"
+    assert_select "select#feedback_#{second.id}_category"
+  end
 end
