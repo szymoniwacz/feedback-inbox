@@ -1,4 +1,8 @@
 class FeedbacksController < ApplicationController
+  def index
+    @feedbacks = Feedback.inbox_order
+  end
+
   def new
     @feedback = Feedback.new
   end

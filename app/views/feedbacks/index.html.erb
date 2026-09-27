@@ -1,0 +1,35 @@
+<% content_for :title, "Feedback inbox" %>
+
+<main>
+  <h1>Feedback inbox</h1>
+
+  <% if @feedbacks.empty? %>
+    <p>No feedback yet. <%= link_to "Submit the first item", new_feedback_path %>.</p>
+  <% else %>
+    <ul class="feedback-inbox">
+      <% @feedbacks.each do |feedback| %>
+        <li>
+          <article aria-labelledby="feedback-<%= feedback.id %>-title">
+            <h2 id="feedback-<%= feedback.id %>-title"><%= feedback.title %></h2>
+
+            <dl>
+              <dt>Description</dt>
+              <dd><%= feedback.description %></dd>
+
+              <dt>Category</dt>
+              <dd><%= feedback.category %></dd>
+
+              <dt>Submitted</dt>
+              <dd><time datetime="<%= feedback.created_at.iso8601 %>"><%= l(feedback.created_at, format: :long) %></time></dd>
+            </dl>
+          </article>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <p>
+    <%= link_to "Submit feedback", new_feedback_path %>
+    <%= link_to "Home", root_path %>
+  </p>
+</main>
