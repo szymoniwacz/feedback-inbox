@@ -8,7 +8,7 @@
 | 2026-09-27 | Keep the project issue short | User wants the agent to perform task decomposition |
 | 2026-09-27 | Describe evidence honestly | Distinguish completed preparation from future execution |
 | 2026-09-27 | MIT for the project and new application code | Explicitly confirmed by Szymon |
-| 2026-09-27 | Demonstrate two execution modes | Project run with eligible automatic squash merges, then a separate default goal with human review and manual merge |
+| 2026-09-27 | Demonstrate two execution modes | Project run with eligible automatic squash merges and independent security-checklist goal #3 with human review and manual merge; concurrent where executor coordination permits |
 | 2026-09-27 | Linux adapter CI for this demo | No native platform application is in scope; one runner avoids an unnecessary matrix |
 
 ## Proposals before application implementation
