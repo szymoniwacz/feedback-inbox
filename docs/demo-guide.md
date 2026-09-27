@@ -14,7 +14,7 @@ After execution, record actual URLs for the project issue, delegated goals, repr
 
 Do not manufacture failed tests or review findings. If the run has no correction cycle, say so. Record any real execution pause and its resolution.
 
-Before starting either run, merge bootstrap PR #1, initialize the private workflow, run its doctor and leak check, and verify automation access and triggers. Project #2 owns runtime bootstrap, real commands and the product readiness gate before implementing product behaviour. Goal #3 can prepare its checklist from the requirements without waiting for application code. Creating an issue alone does not authorize execution.
+Project [#2](https://github.com/szymoniwacz/feedback-inbox/issues/2) ran with `/execute-project self-correcting-review auto-merge`. Product goals [#12](https://github.com/szymoniwacz/feedback-inbox/issues/12)–[#24](https://github.com/szymoniwacz/feedback-inbox/issues/24) merged via PRs [#13](https://github.com/szymoniwacz/feedback-inbox/pull/13)–[#25](https://github.com/szymoniwacz/feedback-inbox/pull/25). After `bundle install`, run `bin/rails db:prepare`, `bin/rails db:seed`, and `bin/rails server` to load synthetic sample feedback before recording the browser walkthrough.
 
 ## Two runs
 
@@ -29,6 +29,6 @@ The human-review example is [goal #3](https://github.com/szymoniwacz/feedback-in
 
 Review the checklist for relevance, correct links, accurate private-workflow boundaries and honest status labels. Do not insert deliberate defects to manufacture review feedback. The human reviewer may request real improvements, then merge manually.
 
-After product implementation, verify the browser flow and real restart persistence against the acceptance details in [requirements](../.ai/docs/project-requirements.md). Update the delivery status and evidence throughout project documentation before announcing project completion.
+Verify submit, invalid input recovery, recategorize, filter, and restart persistence in a browser against [requirements](../.ai/docs/project-requirements.md). Automated integration tests on `main` cover the HTTP boundaries; persistence restart is covered by `test/integration/persistence_restart_test.rb`.
 
 Record the owner's actual trigger comments and resulting merge evidence. The commands above are reference text, not execution authorization.

@@ -2,11 +2,11 @@
 
 A small product feedback app used to demonstrate how I work with AI coding agents: define the product, provide durable context, let an agent break a goal into tasks, and inspect the resulting code, tests and review evidence.
 
-**Status:** Rails application scaffold is in place (Ruby 3.2.3, Rails 8.1.4, SQLite). Inbox product behaviour (FR-001–FR-008) is not implemented yet.
+**Status:** Feedback Inbox is implemented on `main` (Ruby 3.2.3, Rails 8.1.4, SQLite). FR-001–FR-007 ship in delegated goals [#12](https://github.com/szymoniwacz/feedback-inbox/issues/12)–[#24](https://github.com/szymoniwacz/feedback-inbox/issues/24) (PRs [#13](https://github.com/szymoniwacz/feedback-inbox/pull/13)–[#25](https://github.com/szymoniwacz/feedback-inbox/pull/25)). FR-008 (sample data and documentation pass) is in progress via goal [#26](https://github.com/szymoniwacz/feedback-inbox/issues/26).
 
-## What the app will do
+## What the app does
 
-Users will submit feedback, browse an inbox, assign a category (`bug`, `feature request` or `other`), and filter the list. The scope is deliberately small so that the engineering process is easy to follow.
+Users submit feedback, browse an inbox, assign a category (`bug`, `feature request` or `other`), and filter the list. The scope is deliberately small so that the engineering process is easy to follow.
 
 This is an independent engineering demo using synthetic data.
 
@@ -38,10 +38,11 @@ Requires Ruby **3.2.3** (see `.ruby-version`) and Bundler.
 ```bash
 bundle install
 bin/rails db:prepare
+bin/rails db:seed
 bin/rails server
 ```
 
-Open `http://localhost:3000` for the placeholder home page.
+Open `http://localhost:3000` for the home page, then use **View inbox** to browse seeded synthetic feedback.
 
 **Tests**
 
@@ -57,20 +58,14 @@ bin/rails db:reset
 
 Optional style check: `bin/rubocop` (not required in CI for the scaffold goal).
 
-## Planned demonstration
+## Demonstration evidence
 
-| Run | Mode | What it demonstrates |
+| Run | Mode | Evidence |
 |---|---|---|
-| Build the application from a Project Execution issue | `self-correcting-review auto-merge` | Task decomposition, implementation, review, correction and eligible automatic squash merges |
-| Prepare an independent security checklist from Agent Goal #3 | Default `/execute-goal` | A review-ready PR followed by my review and manual merge |
+| Build the application | Project [#2](https://github.com/szymoniwacz/feedback-inbox/issues/2) with `/execute-project self-correcting-review auto-merge` | Delegated goals [#5](https://github.com/szymoniwacz/feedback-inbox/issues/5), [#8](https://github.com/szymoniwacz/feedback-inbox/issues/8), [#12](https://github.com/szymoniwacz/feedback-inbox/issues/12)–[#24](https://github.com/szymoniwacz/feedback-inbox/issues/24); merged PRs [#7](https://github.com/szymoniwacz/feedback-inbox/pull/7)–[#25](https://github.com/szymoniwacz/feedback-inbox/pull/25); CI workflow on `main` |
+| Independent security checklist | Goal [#3](https://github.com/szymoniwacz/feedback-inbox/issues/3) with `/execute-goal` | Separate branch; human review and manual merge (not part of project auto-merge) |
 
-Project Executor selects and delegates goals. Goal Executor performs eligible merges after validation and self-correcting review. High-risk or otherwise ineligible changes still require human review. The independent standalone goal does not inherit the project's authorization.
-
-These are planned demonstrations. The repository owner starts each run explicitly after merging the bootstrap and verifying workflow access and automation triggers. Project #2 establishes runtime readiness before implementing the app; documentation goal #3 can proceed without the app. Creating an issue does not start a run.
-
-Project [#2](https://github.com/szymoniwacz/feedback-inbox/issues/2) and goal [#3](https://github.com/szymoniwacz/feedback-inbox/issues/3) have separate file ownership and may run concurrently when executor coordination permits. Goal #3 exclusively owns `docs/security-review.md` and always stops for human review.
-
-The [demo guide](docs/demo-guide.md) describes the evidence to capture. No successful execution, CI run or review correction is claimed until it actually happens.
+Project Executor delegated scoped goals; Goal Executor performed eligible squash merges after self-correcting review. The [demo guide](docs/demo-guide.md) lists what to show in a walkthrough recording.
 
 ## Reusing and improving the workflow
 
@@ -117,7 +112,7 @@ Public readers can inspect project documentation and implementation evidence wit
 
 ## Current limits
 
-Product behaviour, sample data, and the recorded demo walkthrough remain to be completed. Cloud automation access and triggers need verification for this repository.
+Sample data and the final documentation consistency pass land with FR-008 (goal [#26](https://github.com/szymoniwacz/feedback-inbox/issues/26)). A recorded demo walkthrough and goal #3 security checklist remain optional follow-ups.
 
 ## License
 
