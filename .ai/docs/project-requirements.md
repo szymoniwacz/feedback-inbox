@@ -16,10 +16,10 @@ A demo user submits synthetic product feedback, reads an inbox, categorizes an i
 |---|---|---|
 | FR-001 | Submit feedback with a title and description | Valid input creates one item; blank fields are rejected with readable errors and preserved input |
 | FR-002 | Browse feedback | Newest items appear first with a deterministic tie break; title, description, category and creation time are visible |
-| FR-003 | Assign or change a category | Only `bug`, `feature request` and `other` are accepted; uncategorized submissions start as `other`; changes survive reload |
+| FR-003 | Assign or change a category | Only `bug`, `feature request` and `other` are accepted; uncategorized submissions start as `other`; changes survive reload; a failed change leaves the submission form usable |
 | FR-004 | Filter by category | Each category shows only its own items; All restores the full list; an empty result is explained |
-| FR-005 | Persist local feedback | Created items and category changes survive application restart |
-| FR-006 | Handle invalid requests | Reject unsupported category values and missing items without corrupting stored data |
+| FR-005 | Persist local feedback | Created items and changed categories survive a real process restart using the same database |
+| FR-006 | Handle invalid requests | Reject unsupported category values and missing items without corrupting stored data; the user can recover and continue |
 | FR-007 | Provide meaningful tests | Cover valid submission, validation, categorization, category filtering and persistence at appropriate boundaries |
 | FR-008 | Make the demo reproducible | Document actual setup, run and test commands; provide a small synthetic sample dataset |
 
@@ -37,9 +37,29 @@ Non-goals: authentication, organizations, voting, comments, attachments, email, 
 
 Acceptance requires passing meaningful application checks and a manual submit, categorize, filter and reload walkthrough. No performance or reliability measurements are claimed before measurement.
 
+## Acceptance details
+
+These define observable behaviour, not a task breakdown or prescribed implementation.
+
+- After an invalid category update, display the error, preserve stored data and the active filter, and allow a subsequent valid new submission. Test the rendered submission form's action/method as well as the resulting request. Creation and editing must retain their distinct purposes after errors.
+- Each repeated category control has a unique ID and an explicitly associated label. Verify this with multiple items and keyboard interaction.
+- Verify ordering with tied timestamps and filtering for each allowed category, All and empty results.
+- Persistence evidence must cross a real process boundary against the same isolated file-backed database, or document a repeatable manual stop/start check. Clearing a query cache is only a database reload check, not restart evidence.
+- Verify the end-to-end flow in a browser once implemented: submit, invalid input and recovery, recategorize, filter, restart and reopen. Record the commit and results; do not claim checks that could not run.
+- FR-008 includes keeping README, AGENTS.md, product context, this requirements document, roadmap and demo guide consistent with the delivered state. Update relevant documents as goals land and do a final consistency pass before project completion.
+- Final delivery evidence links to this repository's actual goals, PRs and checks, including sample data and documentation work. A separate rehearsal must never be presented as this run.
+- Record CI events and actual checks accurately. Adapter checks do not prove application behaviour. Do not imply that lint or security scans passed unless they ran. Keep CI economical; explain omitted checks and use local validation where appropriate.
+- Capture a screenshot or short recording when possible. Recording the edited presentation and human approval of the independent checklist are not prerequisites for completing the product project.
+
 ## Workflow evidence
 
-The project issue states the outcome. Project Executor selects scoped goals; implementation PRs retain their link to those goals. Record actual checks, review findings and human decisions. The first demo uses a Project Execution issue in `self-correcting-review auto-merge` mode; eligible delegated goals may be squash-merged after their checks and review pass. A later standalone Agent Goal uses default `/execute-goal` and stops for human review and manual merge. Neither run is started by this bootstrap. Do not start execution merely because an issue was created.
+The project issue states the outcome. Project Executor selects scoped goals; implementation PRs retain their link to those goals. Record actual checks, review findings and human decisions. The first demo uses a Project Execution issue in `self-correcting-review auto-merge` mode; eligible delegated goals may be squash-merged after their checks and review pass. Independent security checklist goal #3 uses default `/execute-goal` and stops for human review and manual merge. Neither run is started by this bootstrap. Do not start execution merely because an issue was created.
+
+### Independent execution boundaries
+
+Project #2 owns the application and its project documentation, excluding `docs/security-review.md`. Goal #3 owns only that checklist, uses a separate branch and isolated workspace, and stops at human review. It does not inherit project auto-merge authorization. Neither run waits for the other run's deliverable. They may proceed concurrently only when the canonical executor coordination rules allow it; do not bypass locks.
+
+Before starting either run, merge bootstrap PR #1 and verify private workflow access and the appropriate automation triggers. Product runtime bootstrap and unresolved implementation decisions are part of project #2's execution, not prerequisites for creating or authorizing that issue. The product readiness gate still applies before product behaviour is implemented. The documentation-only goal can proceed from the accepted requirements without a running application.
 
 Public adapter checks already available:
 
