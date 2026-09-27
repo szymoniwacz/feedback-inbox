@@ -146,6 +146,40 @@ class FeedbacksTest < ActionDispatch::IntegrationTest
     assert_match "bug", response.body
   end
 
+  test "show for missing feedback redirects safely without changing stored data" do
+    feedback = Feedback.create!(title: "Still here", description: "Unchanged.", category: "other")
+    missing_id = feedback.id + 10_000
+
+    get feedback_path(missing_id)
+    assert_redirected_to feedbacks_path
+    follow_redirect!
+
+    assert_response :success
+    assert_match "Feedback not found", response.body
+    assert_equal "Still here", feedback.reload.title
+  end
+
+  test "update for missing feedback redirects safely and creation still works" do
+    feedback = Feedback.create!(title: "Existing", description: "Kept.", category: "bug")
+    missing_id = feedback.id + 10_000
+
+    assert_no_difference -> { Feedback.count } do
+      patch feedback_path(missing_id), params: { feedback: { category: "other" } }
+    end
+
+    assert_redirected_to feedbacks_path
+    follow_redirect!
+    assert_response :success
+    assert_match "Feedback not found", response.body
+    assert_equal "bug", feedback.reload.category
+
+    assert_difference -> { Feedback.count }, 1 do
+      post feedbacks_path, params: {
+        feedback: { title: "After missing", description: "Recovery works." }
+      }
+    end
+  end
+
   test "invalid category update preserves active filter" do
     feedback = Feedback.create!(title: "Stable", description: "Stays other.", category: "other")
     Feedback.create!(title: "Bug only", description: "For filter.", category: "bug")
