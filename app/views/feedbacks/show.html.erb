@@ -1,0 +1,20 @@
+<% content_for :title, "Feedback submitted" %>
+
+<main>
+  <h1>Feedback submitted</h1>
+
+  <p>Thank you. Your feedback was saved.</p>
+
+  <dl>
+    <dt>Title</dt>
+    <dd><%= @feedback.title %></dd>
+
+    <dt>Description</dt>
+    <dd><%= @feedback.description %></dd>
+  </dl>
+
+  <p>
+    <%= link_to "Submit another", new_feedback_path %>
+    <%= link_to "Home", root_path %>
+  </p>
+</main>
