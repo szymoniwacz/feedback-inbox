@@ -7,6 +7,8 @@ class Feedback < ApplicationRecord
   validates :description, presence: true
   validates :category, inclusion: { in: CATEGORIES }
 
+  scope :inbox_order, -> { order(created_at: :desc, id: :desc) }
+
   private
 
   def assign_default_category

@@ -1,5 +1,8 @@
 <main>
   <h1>Feedback Inbox</h1>
   <p>Submit product feedback with a title and description.</p>
-  <p><%= link_to "Submit feedback", new_feedback_path %></p>
+  <p>
+    <%= link_to "Browse inbox", feedbacks_path %>
+    <%= link_to "Submit feedback", new_feedback_path %>
+  </p>
 </main>

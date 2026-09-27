@@ -34,4 +34,46 @@ class FeedbacksTest < ActionDispatch::IntegrationTest
     assert_select "label[for=?]", "feedback_title"
     assert_select "label[for=?]", "feedback_description"
   end
+
+  test "inbox lists feedback newest first with tie-break by id" do
+    older = Feedback.create!(
+      title: "Older item",
+      description: "First created.",
+      category: "other",
+      created_at: 2.hours.ago
+    )
+    newer = Feedback.create!(
+      title: "Newer item",
+      description: "Second created.",
+      category: "bug",
+      created_at: 1.hour.ago
+    )
+    tie_a = Feedback.create!(
+      title: "Tie A",
+      description: "Same timestamp as tie B.",
+      category: "other",
+      created_at: Time.zone.parse("2020-01-01 12:00:00")
+    )
+    tie_b = Feedback.create!(
+      title: "Tie B",
+      description: "Same timestamp as tie A.",
+      category: "other",
+      created_at: Time.zone.parse("2020-01-01 12:00:00")
+    )
+
+    get feedbacks_path
+
+    assert_response :success
+    titles = css_select("h2").map(&:text)
+    assert_equal [newer, older, tie_b, tie_a].map(&:title), titles
+    assert_select "dt", text: "Category", count: 4
+    assert_select "dt", text: "Submitted", count: 4
+  end
+
+  test "home links to inbox" do
+    get root_path
+
+    assert_response :success
+    assert_select "a[href=?]", feedbacks_path, text: "Browse inbox"
+  end
 end
