@@ -14,17 +14,21 @@ After execution, record actual URLs for the project issue, delegated goals, repr
 
 Do not manufacture failed tests or review findings. If the run has no correction cycle, say so. Record any real execution pause and its resolution.
 
-Before starting, complete the requirements readiness gate, establish runtime commands, initialize the private workflow, run its doctor and leak check, and verify automation access and triggers. Use the materialized Project Execution issue template with the concise outcome from `demo-project-issue.md`. Creating the issue alone does not authorize execution.
+Before starting either run, merge bootstrap PR #1, initialize the private workflow, run its doctor and leak check, and verify automation access and triggers. Project #2 owns runtime bootstrap, real commands and the product readiness gate before implementing product behaviour. Goal #3 can prepare its checklist from the requirements without waiting for application code. Creating an issue alone does not authorize execution.
 
 ## Two runs
 
 | Run | Owner comment after readiness | Expected stopping point |
 |---|---|---|
 | Project Execution | `/execute-project self-correcting-review auto-merge` | Eligible goals are reviewed, validated and squash-merged; ineligible goals escalate |
-| Later standalone Agent Goal | `/execute-goal` | Review-ready PR; Szymon reviews and merges |
+| Independent security checklist goal #3 | `/execute-goal` | Review-ready PR; Szymon reviews and merges |
 
 Project Executor delegates; Goal Executor performs eligible merges. This does not require enabling GitHub's delayed auto-merge queue.
 
-A possible later goal is marking feedback as read. It is an optional follow-up, outside the initial project. Choose it after the first run; do not create a prewritten task breakdown or start it concurrently.
+The human-review example is [goal #3](https://github.com/szymoniwacz/feedback-inbox/issues/3): a short security checklist in `docs/security-review.md`. Project [#2](https://github.com/szymoniwacz/feedback-inbox/issues/2) must not modify that file. Each run uses an isolated workspace and branch. Start both independently if canonical coordination permits; respect locks if the executor serializes work.
+
+Review the checklist for relevance, correct links, accurate private-workflow boundaries and honest status labels. Do not insert deliberate defects to manufacture review feedback. The human reviewer may request real improvements, then merge manually.
+
+After product implementation, verify the browser flow and real restart persistence against the acceptance details in [requirements](../.ai/docs/project-requirements.md). Update the delivery status and evidence throughout project documentation before announcing project completion.
 
 Record the owner's actual trigger comments and resulting merge evidence. The commands above are reference text, not execution authorization.
