@@ -1,4 +1,6 @@
 class FeedbacksController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :feedback_not_found
+
   def index
     @filter = selected_filter
     @feedbacks = filtered_feedbacks
@@ -34,6 +36,10 @@ class FeedbacksController < ApplicationController
   end
 
   private
+
+  def feedback_not_found
+    redirect_to feedbacks_path, alert: "Feedback not found."
+  end
 
   def feedback_params
     params.expect(feedback: [:title, :description])
