@@ -15,6 +15,16 @@ class FeedbacksTest < ActionDispatch::IntegrationTest
     assert_match "Slow export", response.body
   end
 
+  test "valid submission without category stores other" do
+    post feedbacks_path, params: {
+      feedback: { title: "No category yet", description: "Defaults on create." }
+    }
+
+    feedback = Feedback.order(:id).last
+    assert_equal "other", feedback.category
+    assert_redirected_to feedback_path(feedback)
+  end
+
   test "blank fields re-render form with errors and preserved input" do
     assert_no_difference -> { Feedback.count } do
       post feedbacks_path, params: {
