@@ -11,11 +11,13 @@
 | 2026-09-27 | Demonstrate two execution modes | Project run with eligible automatic squash merges and independent security-checklist goal #3 with human review and manual merge; concurrent where executor coordination permits |
 | 2026-09-27 | Linux adapter CI for this demo | No native platform application is in scope; one runner avoids an unnecessary matrix |
 
-## Proposals before application implementation
+## Stack and runtime (confirmed at readiness goal #5)
 
-| Proposal | Rationale | Owner / return trigger |
+| Decision | Rationale | Status |
 |---|---|---|
-| Ruby on Rails, SQLite, server-rendered HTML | Familiar stack with few moving parts | Szymon, before runtime bootstrap |
-| Local-only execution, synthetic data, no authentication | Bounded demo; hosting needs a separate access decision | Szymon, before implementation |
+| Ruby on Rails, SQLite, server-rendered HTML | Familiar stack with few moving parts for a local demo | Confirmed for implementation; exact versions chosen in scaffold goal |
+| Active stack profile | `.ai/stack-profiles/ruby-rails.md` | Recorded in project requirements |
+| Local-only execution, synthetic data, no authentication | Bounded demo; production hosting out of scope | Confirmed |
 
-These proposals do not constitute a completed project readiness gate.
+Application commands and gem versions remain to be recorded when the Rails
+scaffold lands in the next product goal.

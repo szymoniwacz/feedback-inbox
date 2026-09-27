@@ -72,7 +72,16 @@ Workflow initialization additionally needs private template access. Application 
 
 ## Assumptions and proposals
 
-Ruby on Rails, SQLite and server-rendered HTML are proposed for a local-only demo. Confirm runtime versions and this architecture before implementation. These are not presented as prior user decisions. Szymon confirmed MIT for the entire project, including new application code.
+Ruby on Rails, SQLite and server-rendered HTML are confirmed for a local-only
+demo (readiness goal #5). Exact Ruby/Rails versions and application commands
+are recorded when the Rails scaffold is created in the next product goal.
+Szymon confirmed MIT for the entire project, including new application code.
+
+### Active stack profile
+
+- **Profile:** [ruby-rails](../stack-profiles/ruby-rails.md)
+- **Application commands:** deferred to the first scaffold-producing product goal
+  (no behavior-free scaffold during readiness)
 
 ## Project decision status
 
@@ -88,23 +97,23 @@ Ruby on Rails, SQLite and server-rendered HTML are proposed for a local-only dem
 | Non-goals | decided | Keep a small demo | Quality and boundaries |
 | Interfaces | decided | Web UI for the accepted product flows | Functional requirements |
 | Inputs and outputs | decided | Feedback text, category, filter and inbox | Inputs and outputs |
-| Architecture shape | deferred | Proposed single Rails application; implementation absent | Szymon, runtime bootstrap |
+| Architecture shape | decided | Single Rails web app, server-rendered HTML; see architecture direction | `.ai/docs/architecture-direction.md` |
 | Boundaries | decided | App independent of the private engineering workflow | README setup and workflow sections |
-| Storage and data ownership | deferred | Proposed local SQLite containing synthetic data | Szymon, runtime bootstrap |
+| Storage and data ownership | decided | Local SQLite file with synthetic feedback only | Architecture direction |
 | Retention and migrations | deferred | Define migration and sample reset commands when storage exists | Implementing agent, before readiness |
 | Integrations and failure handling | decided | No app integrations; workflow setup fails closed if unavailable | Scope and inherited adapter |
-| Authentication and authorization | deferred | Proposed local-only unauthenticated demo; no hosting authorized | Szymon, before implementation |
+| Authentication and authorization | decided | Local-only unauthenticated demo; no public hosting authorized | Scope and architecture direction |
 | Secrets, privacy, and sensitive data | decided | Synthetic data only; preserve private workflow separation | Quality and boundaries |
-| Language, framework, and dependencies | deferred | Rails proposed; versions and dependencies not selected | Szymon, runtime bootstrap |
-| Environments and deployment | deferred | Local execution proposed; production hosting out of scope | Szymon, runtime bootstrap |
+| Language, framework, and dependencies | decided | Ruby on Rails with SQLite; versions and gems at scaffold goal | Stack profile ruby-rails |
+| Environments and deployment | decided | Local developer machine only; production hosting out of scope | Scope |
 | Configuration | deferred | Establish app config when stack is selected | Implementing agent, before readiness |
 | Logging, monitoring, and errors | deferred | Readable errors required; logging depends on chosen stack | Implementing agent, before readiness |
 | Tests, lint, typecheck, performance | deferred | Adapter checks exist; application validation commands pending | Implementing agent, runtime bootstrap |
 | Scale, reliability, and cost | decided | Small synthetic demo; no availability SLA or paid app services | Scope |
-| Supported platforms and compatibility | deferred | Select and verify runtime/browser support for demo environment | Implementing agent, runtime bootstrap |
+| Supported platforms and compatibility | decided | Linux adapter CI; demo on Linux with a current evergreen browser; verify at scaffold | Goal acceptance for scaffold |
 | Accessibility and localization | decided | English interface; labelled keyboard-accessible controls | Quality and boundaries |
 | Compliance, backup, and recovery | not-applicable | Disposable synthetic local demo; revisit if real data is introduced | Scope |
-| Branching, CI, release, and rollback | deferred | Scoped PRs; project auto-merge and separate human-review goal; Linux adapter CI supplied; remote checks and automation still require verification | Szymon and implementing agent, before readiness |
+| Branching, CI, release, and rollback | decided | Scoped PRs with `issue-<n>` branches; Linux adapter CI; Project Executor with eligible auto-merge on #2; independent human-review goal #3; private workflow setup verified in readiness goal #5 | This document and README |
 | License, ownership, and documentation expectations | decided | Szymon owns project decisions; MIT confirmed for all project code; maintain setup and validation documentation | LICENSE, README and decision log |
 
 ## Project readiness
@@ -114,14 +123,16 @@ Ruby on Rails, SQLite and server-rendered HTML are proposed for a local-only dem
 | Definition coverage complete | Yes | Every decision area classified |
 | No `blocking-question` remains | Yes | Future choices explicitly deferred for documentation stage |
 | All `deferred` items have reason and return trigger | Yes | Implementation and target configuration do not exist yet; triggers above |
-| Template customization complete | Partial | Project documents prepared; target automation and runtime pending |
-| Stack profile selected or marked N/A | Pending | Stack proposal not confirmed |
-| Real project commands recorded | Partial | Adapter commands only |
+| Template customization complete | Yes | Product-facing docs and overlay in place |
+| Stack profile selected or marked N/A | Yes | `ruby-rails` profile active |
+| Real project commands recorded | Partial | Adapter and workflow commands verified; Rails commands deferred to scaffold goal |
 | Root README describes the product | Yes | Includes honest current state |
 | `AGENTS.md` describes repository role | Yes | Thin entrypoint retained |
 | Bootstrap markers removed | Yes | Supplied project placeholders replaced |
 | License and ownership decided | Yes | MIT explicitly confirmed by Szymon |
-| CI, branch rules, and approvals decided | Partial | Two demo modes documented; target automation unverified |
-| Project ready for first product task | No | Complete runtime bootstrap and automation verification first |
+| CI, branch rules, and approvals decided | Yes | Adapter CI on `main`; automation triggers configured; workflow materialization verified |
+| Project ready for first product task | Yes | Readiness documentation complete; next goal may create the Rails scaffold |
 
-This gate deliberately remains incomplete. Do not claim a working app or start product implementation based on this document alone.
+Automation verification (goal #5): `./scripts/setup-ai-workflow.sh`,
+`bash tests/test-adapter.sh`, and `./scripts/check-workflow-leak.sh` succeeded
+in the goal branch CI environment. No application behaviour is implemented yet.
