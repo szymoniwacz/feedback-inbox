@@ -3,6 +3,13 @@
 <main>
   <h1>Feedback inbox</h1>
 
+  <% if flash[:alert].present? %>
+    <p class="flash-alert" role="alert"><%= flash[:alert] %></p>
+  <% end %>
+  <% if flash[:notice].present? %>
+    <p class="flash-notice"><%= flash[:notice] %></p>
+  <% end %>
+
   <% if @feedbacks.empty? %>
     <p>No feedback yet. <%= link_to "Submit the first item", new_feedback_path %>.</p>
   <% else %>
@@ -17,7 +24,13 @@
               <dd><%= feedback.description %></dd>
 
               <dt>Category</dt>
-              <dd><%= feedback.category %></dd>
+              <dd>
+                <%= form_with model: feedback, url: feedback_path(feedback), method: :patch, html: { class: "category-form" } do |form| %>
+                  <%= form.label :category, "Change category", for: "feedback_#{feedback.id}_category" %>
+                  <%= form.select :category, Feedback::CATEGORIES, {}, id: "feedback_#{feedback.id}_category" %>
+                  <%= form.submit "Update category" %>
+                <% end %>
+              </dd>
 
               <dt>Submitted</dt>
               <dd><time datetime="<%= feedback.created_at.iso8601 %>"><%= l(feedback.created_at, format: :long) %></time></dd>
