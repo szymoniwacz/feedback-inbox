@@ -36,11 +36,13 @@ Product task decomposition is intentionally left to Project Executor.
 | Run | Mode | What it demonstrates |
 |---|---|---|
 | Build the application from a Project Execution issue | `self-correcting-review auto-merge` | Task decomposition, implementation, review, correction and eligible automatic squash merges |
-| Make one later, separate change from an Agent Goal issue | Default `/execute-goal` | A review-ready PR followed by my review and manual merge |
+| Prepare an independent security checklist from Agent Goal #3 | Default `/execute-goal` | A review-ready PR followed by my review and manual merge |
 
-Project Executor selects and delegates goals. Goal Executor performs eligible merges after validation and self-correcting review. High-risk or otherwise ineligible changes still require human review. The later standalone goal does not inherit the project's authorization.
+Project Executor selects and delegates goals. Goal Executor performs eligible merges after validation and self-correcting review. High-risk or otherwise ineligible changes still require human review. The independent standalone goal does not inherit the project's authorization.
 
-These are planned demonstrations. The repository owner starts each run explicitly after readiness and automation setup are verified. Creating an issue does not start a run.
+These are planned demonstrations. The repository owner starts each run explicitly after merging the bootstrap and verifying workflow access and automation triggers. Project #2 establishes runtime readiness before implementing the app; documentation goal #3 can proceed without the app. Creating an issue does not start a run.
+
+Project [#2](https://github.com/szymoniwacz/feedback-inbox/issues/2) and goal [#3](https://github.com/szymoniwacz/feedback-inbox/issues/3) have separate file ownership and may run concurrently when executor coordination permits. Goal #3 exclusively owns `docs/security-review.md` and always stops for human review.
 
 The [demo guide](docs/demo-guide.md) describes the evidence to capture. No successful execution, CI run or review correction is claimed until it actually happens.
 
