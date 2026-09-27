@@ -3,6 +3,20 @@
 <main>
   <h1>Feedback inbox</h1>
 
+  <%= form_with url: feedbacks_path, method: :get, html: { class: "category-filter-form" } do |form| %>
+    <fieldset>
+      <legend>Filter by category</legend>
+      <% Feedback::FILTERS.each do |filter_value| %>
+        <% label = filter_value == Feedback::FILTER_ALL ? "All" : filter_value %>
+        <div>
+          <%= form.radio_button :filter, filter_value, checked: @filter == filter_value, id: "filter_#{filter_value.parameterize}" %>
+          <%= form.label :filter, label, value: filter_value, for: "filter_#{filter_value.parameterize}" %>
+        </div>
+      <% end %>
+      <%= form.submit "Apply filter" %>
+    </fieldset>
+  <% end %>
+
   <% if flash[:alert].present? %>
     <p class="flash-alert" role="alert"><%= flash[:alert] %></p>
   <% end %>
@@ -11,7 +25,11 @@
   <% end %>
 
   <% if @feedbacks.empty? %>
-    <p>No feedback yet. <%= link_to "Submit the first item", new_feedback_path %>.</p>
+    <% if @filter == Feedback::FILTER_ALL %>
+      <p>No feedback yet. <%= link_to "Submit the first item", new_feedback_path %>.</p>
+    <% else %>
+      <p>No feedback in the <strong><%= @filter %></strong> category. <%= link_to "Show all items", feedbacks_path %> or <%= link_to "submit feedback", new_feedback_path %>.</p>
+    <% end %>
   <% else %>
     <ul class="feedback-inbox">
       <% @feedbacks.each do |feedback| %>
@@ -25,7 +43,7 @@
 
               <dt>Category</dt>
               <dd>
-                <%= form_with model: feedback, url: feedback_path(feedback), method: :patch, html: { class: "category-form" } do |form| %>
+                <%= form_with model: feedback, url: feedback_path(feedback, filter: @filter), method: :patch, html: { class: "category-form" } do |form| %>
                   <%= form.label :category, "Change category", for: "feedback_#{feedback.id}_category" %>
                   <%= form.select :category, Feedback::CATEGORIES, {}, id: "feedback_#{feedback.id}_category" %>
                   <%= form.submit "Update category" %>
