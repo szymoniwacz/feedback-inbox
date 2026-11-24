@@ -55,7 +55,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version-file: .ruby-version
+          ruby-version: '3.2'
           bundler-cache: true
 
       - name: Run Rails tests
