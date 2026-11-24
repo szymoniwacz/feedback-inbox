@@ -29,7 +29,7 @@ The walkthrough should take about three minutes. Its evidence is the actual [pro
 | FR-005 Persistence | [#20](https://github.com/szymoniwacz/feedback-inbox/issues/20) | [#21](https://github.com/szymoniwacz/feedback-inbox/pull/21) |
 | FR-006 Invalid requests | [#22](https://github.com/szymoniwacz/feedback-inbox/issues/22) | [#23](https://github.com/szymoniwacz/feedback-inbox/pull/23) |
 | FR-007 Tests | [#24](https://github.com/szymoniwacz/feedback-inbox/issues/24) | [#25](https://github.com/szymoniwacz/feedback-inbox/pull/25) |
-| FR-008 Demo & docs | [#26](https://github.com/szymoniwacz/feedback-inbox/issues/26) | (this goal's PR) |
+| FR-008 Demo & docs | [#26](https://github.com/szymoniwacz/feedback-inbox/issues/26) | [#27](https://github.com/szymoniwacz/feedback-inbox/pull/27) |
 
 Independent [security checklist goal #3](https://github.com/szymoniwacz/feedback-inbox/issues/3) uses default `/execute-goal` and does not inherit project auto-merge.
 
